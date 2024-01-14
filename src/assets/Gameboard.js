@@ -7,6 +7,7 @@ export default class Gameboard {
     this.ships = [];
   }
 
+  // private function for instantiating game board with given size
   #createBoard(size) {
     const newBoard = [];
     for (let i = 0; i < size; i += 1) {
@@ -34,6 +35,7 @@ export default class Gameboard {
     this.#renderToBoard(orientation, coordArr, boatLength, boatSymbol);
   }
 
+  // private function for translating ship specs to length and symbol
   #getBoatLength(boat) {
     if (boat === 'carrier') {
       return [5, 'C'];
@@ -53,6 +55,7 @@ export default class Gameboard {
     throw new Error('improper boat name format');
   }
 
+  // private function for checking if ship placement is beyond board
   #isBoardConflict(orientation, coordArr, boatLength) {
     if (orientation === 'h') {
       return coordArr[1] + (boatLength - 1) >= this.size;
@@ -62,6 +65,7 @@ export default class Gameboard {
     }
   }
 
+  // private function for checking if ships overlap
   #isShipConflict(orientation, coordArr, boatLength) {
     if (orientation === 'h') {
       const row = coordArr[0];
@@ -81,6 +85,7 @@ export default class Gameboard {
     }
   }
 
+  // private function to add ship symbols to board on successful placement
   #renderToBoard(orientation, coordArr, boatLength, boatSymbol) {
     if (orientation === 'h') {
       const row = coordArr[0];
@@ -95,4 +100,6 @@ export default class Gameboard {
       }
     }
   }
+
+  receiveAttack(coordArr) {}
 }
