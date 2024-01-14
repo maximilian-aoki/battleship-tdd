@@ -1,6 +1,6 @@
 import Gameboard from './Gameboard';
 
-describe('Gameboard', () => {
+describe('Gameboard - placeShip', () => {
   test('instantiate 10x10 board', () => {
     const newBoard = new Gameboard(10);
 
@@ -94,6 +94,27 @@ describe('Gameboard', () => {
     expect(newBoard.ships).toHaveLength(3);
   });
 
+  test('place multiple boats close to edge', () => {
+    const newBoard = new Gameboard(10);
+    newBoard.placeShip('h', [0, 7], 'submarine');
+    newBoard.placeShip('v', [7, 3], 'destroyer');
+    newBoard.placeShip('v', [8, 9], 'patrol');
+
+    expect(newBoard.board).toEqual([
+      ['', '', '', '', '', '', '', 'S', 'S', 'S'],
+      ['', '', '', '', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', '', '', '', ''],
+      ['', '', '', 'D', '', '', '', '', '', ''],
+      ['', '', '', 'D', '', '', '', '', '', 'P'],
+      ['', '', '', 'D', '', '', '', '', '', 'P'],
+    ]);
+    expect(newBoard.ships).toHaveLength(3);
+  });
+
   test('disallow illegal vertical placement', () => {
     const newBoard = new Gameboard(10);
     expect(newBoard.placeShip('v', [8, 8], 'carrier')).toBe('illegal move');
@@ -124,5 +145,14 @@ describe('Gameboard', () => {
       ['', '', '', '', '', '', '', '', '', ''],
     ]);
     expect(newBoard.ships).toHaveLength(1);
+  });
+
+  test('placed boats have correct symbol property', () => {
+    const newBoard = new Gameboard(10);
+    newBoard.placeShip('v', [0, 0], 'carrier');
+    newBoard.placeShip('v', [0, 1], 'destroyer');
+
+    expect(newBoard.ships[0].symbol).toBe('C');
+    expect(newBoard.ships[1].symbol).toBe('D');
   });
 });

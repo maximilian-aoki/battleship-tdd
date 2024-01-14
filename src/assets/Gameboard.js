@@ -31,7 +31,7 @@ export default class Gameboard {
       return 'illegal move';
     }
 
-    this.ships.push(new Ship(boatLength));
+    this.ships.push(new Ship(boatLength, boatSymbol));
     this.#renderToBoard(orientation, coordArr, boatLength, boatSymbol);
   }
 
