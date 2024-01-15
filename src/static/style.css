@@ -1,16 +1,85 @@
 html {
   box-sizing: border-box;
   font-size: 16px;
+  /* COLOUR PALETTE */
+  --jet: #323031ff;
+  --jet-2: #3d3b3cff;
+  --gray: #7f7979ff;
+  --silver: #c1bdb3ff;
+  --cambridge-blue: #86ba90ff;
+  background-color: var(--silver);
 }
 *,
 *::before,
 *::after {
   box-sizing: inherit;
 }
+/* font */
+@import url('https://fonts.googleapis.com/css2?family=Tektur:wght@400..900&display=swap');
 body {
   min-height: 100vh;
+  grid-template-rows: 10rem 4rem 35rem 1fr 10rem;
+  font-family: 'Tektur', sans-serif;
 }
 /* for debugging */
 * {
-  outline: 1px solid grey;
+  /* outline: 1px solid grey; */
+}
+/* LAYOUT */
+.grid {
+  display: grid;
+}
+
+/* HEADER */
+.header {
+  place-content: center;
+  margin-top: 4rem;
+  font-size: 5rem;
+  font-weight: 600;
+  color: var(--jet);
+}
+
+/* MESSAGES */
+.messages {
+  place-content: center;
+  margin-bottom: 1.1rem;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--jet);
+}
+
+/* CONTENT */
+.content {
+  justify-self: center;
+  width: 1050px;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+}
+.content > div {
+  grid-template-rows: 1fr 60px;
+}
+.nametag {
+  place-content: center;
+  margin-top: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--jet);
+}
+.computer-name {
+  color: var(--jet-2);
+}
+.frame {
+  outline: 0.5rem solid var(--jet-2);
+  border-radius: 0.5rem;
+  box-shadow: 4px 4px 15px 5px #000000;
+}
+
+/* FOOTER */
+.footer {
+  place-content: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--silver);
+  background-color: var(--jet-2);
 }
