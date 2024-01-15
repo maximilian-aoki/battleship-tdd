@@ -105,21 +105,22 @@ export default class Gameboard {
     if (this.board[coordArr[0]][coordArr[1]] === '') {
       // shot is a miss
       this.board[coordArr[0]][coordArr[1]] = 'o';
-    } else if (
+      return null;
+    }
+    if (
       this.board[coordArr[0]][coordArr[1]] === 'o' ||
       this.board[coordArr[0]][coordArr[1]] === 'x'
     ) {
       // already shot here
       return 'already targeted coordinate';
-    } else {
-      // shot hit a boat
-      this.ships.forEach((ship) => {
-        if (ship.symbol === this.board[coordArr[0]][coordArr[1]]) {
-          ship.hit();
-        }
-      });
-      this.board[coordArr[0]][coordArr[1]] = 'x';
     }
+    // shot hit a boat
+    this.ships.forEach((ship) => {
+      if (ship.symbol === this.board[coordArr[0]][coordArr[1]]) {
+        ship.hit();
+      }
+    });
+    this.board[coordArr[0]][coordArr[1]] = 'x';
   }
 
   checkAllSunk() {
