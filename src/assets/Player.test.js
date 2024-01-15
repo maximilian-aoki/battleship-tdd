@@ -19,7 +19,7 @@ describe('Player constructor', () => {
 
   test('gets correct enemy coords arr on instantiation', () => {
     const newPlayer = new Player();
-    expect(newPlayer.enemyCoords).toHaveLength(100);
+    expect(newPlayer.allCoords).toHaveLength(100);
   });
 });
 
@@ -67,14 +67,14 @@ describe('attack', () => {
 });
 
 describe('randomAttack', () => {
-  test('randomized computer attack based on set of available coordinates', () => {
+  test('randomized computer attack based on set of available coordinates - MOCK', () => {
     const player = new Player();
     const enemy = new Player();
     enemy.placeShip('v', [0, 0], 'carrier');
 
     const mockRandomAttack1 = jest.fn(() => {
-      const randomCoords = player.enemyCoords[0]; // should be [0,0]
-      player.enemyCoords.splice(0, 1);
+      const randomCoords = player.allCoords[0]; // should be [0,0]
+      player.allCoords.splice(0, 1);
 
       if (player.attack(enemy, randomCoords) === 'hit') {
         mockRandomAttack2();
@@ -82,13 +82,33 @@ describe('randomAttack', () => {
     });
 
     const mockRandomAttack2 = jest.fn(() => {
-      const randomCoords = player.enemyCoords[1]; // should be [0,1]
-      player.enemyCoords.splice(1, 1);
+      const randomCoords = player.allCoords[1]; // should be [0,1]
+      player.allCoords.splice(1, 1);
 
       player.attack(enemy, randomCoords);
     });
 
     mockRandomAttack1();
-    expect(player.enemyCoords).toHaveLength(98);
+    expect(player.allCoords).toHaveLength(98);
+  });
+
+  test('check if real random attack function fires', () => {
+    const player = new Player();
+    const enemy = new Player();
+
+    enemy.randomAttack(player);
+    enemy.randomAttack(player);
+    enemy.randomAttack(player);
+
+    expect(enemy.allCoords).toHaveLength(97);
+  });
+});
+
+describe('randomPlaceShips', () => {
+  test('place all 5 ships', () => {
+    const enemy = new Player();
+    enemy.randomPlaceShips();
+
+    expect(enemy.playerBoard.ships).toHaveLength(5);
   });
 });

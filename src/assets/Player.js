@@ -3,7 +3,7 @@ import Gameboard from './Gameboard';
 export default class Player {
   constructor() {
     this.playerBoard = new Gameboard(10);
-    this.enemyCoords = this.#getAllCoords(10);
+    this.allCoords = this.#getAllCoords(10);
   }
 
   #getAllCoords(size) {
@@ -17,7 +17,7 @@ export default class Player {
   }
 
   placeShip(orientation, coordArr, boat) {
-    this.playerBoard.placeShip(orientation, coordArr, boat);
+    return this.playerBoard.placeShip(orientation, coordArr, boat);
   }
 
   attack(enemyPlayer, coordArr) {
@@ -26,12 +26,38 @@ export default class Player {
 
   // computer random attack move
   randomAttack(enemyPlayer) {
-    const randomIndex = Math.floor(Math.random() * this.enemyCoords.length);
-    const randomCoords = this.enemyCoords[randomIndex];
-    this.enemyCoords.splice(randomIndex, 1);
+    const randomIndex = Math.floor(Math.random() * this.allCoords.length);
+    const randomCoords = this.allCoords[randomIndex];
+    this.allCoords.splice(randomIndex, 1);
 
     if (this.attack(enemyPlayer, randomCoords) === 'hit') {
       this.randomAttack(enemyPlayer);
+    }
+  }
+
+  // computer random ship placement
+  randomPlaceShips() {
+    const shipOptions = [
+      'carrier',
+      'battleship',
+      'destroyer',
+      'submarine',
+      'patrol',
+    ];
+    shipOptions.forEach((shipType) => {
+      this.#randomPlace(shipType);
+    });
+  }
+
+  #randomPlace(shipType) {
+    const randomOrientation = ['v', 'h'][Math.floor(Math.random() * 2)];
+    const randomCoords = this.allCoords[Math.floor(Math.random() * 100)];
+
+    if (
+      this.placeShip(randomOrientation, randomCoords, shipType) ===
+      'illegal move'
+    ) {
+      this.#randomPlace(shipType);
     }
   }
 }
