@@ -105,7 +105,7 @@ export default class Gameboard {
     if (this.board[coordArr[0]][coordArr[1]] === '') {
       // shot is a miss
       this.board[coordArr[0]][coordArr[1]] = 'o';
-      return null;
+      return 'miss';
     }
     if (
       this.board[coordArr[0]][coordArr[1]] === 'o' ||
@@ -121,6 +121,7 @@ export default class Gameboard {
       }
     });
     this.board[coordArr[0]][coordArr[1]] = 'x';
+    return 'hit';
   }
 
   checkAllSunk() {
