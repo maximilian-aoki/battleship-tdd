@@ -156,3 +156,191 @@ describe('Gameboard - placeShip', () => {
     expect(newBoard.ships[1].symbol).toBe('D');
   });
 });
+
+describe('Gameboard - receiveAttack', () => {
+  const newBoard = new Gameboard(10);
+  newBoard.placeShip('v', [1, 1], 'carrier');
+  newBoard.placeShip('h', [0, 2], 'battleship');
+  newBoard.placeShip('v', [4, 9], 'destroyer');
+  newBoard.placeShip('h', [4, 4], 'submarine');
+  newBoard.placeShip('v', [8, 2], 'patrol');
+
+  test('check full board set up properly', () => {
+    expect(newBoard.board).toEqual([
+      ['', '', 'B', 'B', 'B', 'B', '', '', '', ''],
+      ['', 'C', '', '', '', '', '', '', '', ''],
+      ['', 'C', '', '', '', '', '', '', '', ''],
+      ['', 'C', '', '', '', '', '', '', '', ''],
+      ['', 'C', '', '', 'S', 'S', 'S', '', '', 'D'],
+      ['', 'C', '', '', '', '', '', '', '', 'D'],
+      ['', '', '', '', '', '', '', '', '', 'D'],
+      ['', '', '', '', '', '', '', '', '', ''],
+      ['', '', 'P', '', '', '', '', '', '', ''],
+      ['', '', 'P', '', '', '', '', '', '', ''],
+    ]);
+    expect(newBoard.ships).toHaveLength(5);
+  });
+
+  test('missed shot on fresh board', () => {
+    newBoard.receiveAttack([2, 3]);
+
+    expect(newBoard.board).toEqual([
+      ['', '', 'B', 'B', 'B', 'B', '', '', '', ''],
+      ['', 'C', '', '', '', '', '', '', '', ''],
+      ['', 'C', '', 'o', '', '', '', '', '', ''],
+      ['', 'C', '', '', '', '', '', '', '', ''],
+      ['', 'C', '', '', 'S', 'S', 'S', '', '', 'D'],
+      ['', 'C', '', '', '', '', '', '', '', 'D'],
+      ['', '', '', '', '', '', '', '', '', 'D'],
+      ['', '', '', '', '', '', '', '', '', ''],
+      ['', '', 'P', '', '', '', '', '', '', ''],
+      ['', '', 'P', '', '', '', '', '', '', ''],
+    ]);
+  });
+
+  test('second missed shot on fresh board', () => {
+    newBoard.receiveAttack([8, 7]);
+
+    expect(newBoard.board).toEqual([
+      ['', '', 'B', 'B', 'B', 'B', '', '', '', ''],
+      ['', 'C', '', '', '', '', '', '', '', ''],
+      ['', 'C', '', 'o', '', '', '', '', '', ''],
+      ['', 'C', '', '', '', '', '', '', '', ''],
+      ['', 'C', '', '', 'S', 'S', 'S', '', '', 'D'],
+      ['', 'C', '', '', '', '', '', '', '', 'D'],
+      ['', '', '', '', '', '', '', '', '', 'D'],
+      ['', '', '', '', '', '', '', '', '', ''],
+      ['', '', 'P', '', '', '', '', 'o', '', ''],
+      ['', '', 'P', '', '', '', '', '', '', ''],
+    ]);
+  });
+
+  test('successful hit on boat', () => {
+    newBoard.receiveAttack([0, 2]);
+
+    expect(newBoard.board).toEqual([
+      ['', '', 'x', 'B', 'B', 'B', '', '', '', ''],
+      ['', 'C', '', '', '', '', '', '', '', ''],
+      ['', 'C', '', 'o', '', '', '', '', '', ''],
+      ['', 'C', '', '', '', '', '', '', '', ''],
+      ['', 'C', '', '', 'S', 'S', 'S', '', '', 'D'],
+      ['', 'C', '', '', '', '', '', '', '', 'D'],
+      ['', '', '', '', '', '', '', '', '', 'D'],
+      ['', '', '', '', '', '', '', '', '', ''],
+      ['', '', 'P', '', '', '', '', 'o', '', ''],
+      ['', '', 'P', '', '', '', '', '', '', ''],
+    ]);
+
+    newBoard.ships.forEach((ship) => {
+      if (ship.symbol === 'B') {
+        expect(ship.hits).toBe(1);
+      }
+    });
+  });
+
+  test('successfully sink boat', () => {
+    newBoard.receiveAttack([4, 4]);
+    newBoard.receiveAttack([4, 5]);
+    newBoard.receiveAttack([4, 6]);
+
+    expect(newBoard.board).toEqual([
+      ['', '', 'x', 'B', 'B', 'B', '', '', '', ''],
+      ['', 'C', '', '', '', '', '', '', '', ''],
+      ['', 'C', '', 'o', '', '', '', '', '', ''],
+      ['', 'C', '', '', '', '', '', '', '', ''],
+      ['', 'C', '', '', 'x', 'x', 'x', '', '', 'D'],
+      ['', 'C', '', '', '', '', '', '', '', 'D'],
+      ['', '', '', '', '', '', '', '', '', 'D'],
+      ['', '', '', '', '', '', '', '', '', ''],
+      ['', '', 'P', '', '', '', '', 'o', '', ''],
+      ['', '', 'P', '', '', '', '', '', '', ''],
+    ]);
+
+    newBoard.ships.forEach((ship) => {
+      if (ship.symbol === 'S') {
+        expect(ship.isSunk).toBe(true);
+      }
+    });
+  });
+
+  test('successfully sink all boats', () => {
+    newBoard.receiveAttack([0, 3]);
+    newBoard.receiveAttack([0, 4]);
+    newBoard.receiveAttack([0, 5]);
+
+    newBoard.receiveAttack([1, 1]);
+    newBoard.receiveAttack([2, 1]);
+    newBoard.receiveAttack([3, 1]);
+    newBoard.receiveAttack([4, 1]);
+    newBoard.receiveAttack([5, 1]);
+
+    newBoard.receiveAttack([4, 9]);
+    newBoard.receiveAttack([5, 9]);
+    newBoard.receiveAttack([6, 9]);
+
+    newBoard.receiveAttack([8, 2]);
+    newBoard.receiveAttack([9, 2]);
+
+    expect(newBoard.board).toEqual([
+      ['', '', 'x', 'x', 'x', 'x', '', '', '', ''],
+      ['', 'x', '', '', '', '', '', '', '', ''],
+      ['', 'x', '', 'o', '', '', '', '', '', ''],
+      ['', 'x', '', '', '', '', '', '', '', ''],
+      ['', 'x', '', '', 'x', 'x', 'x', '', '', 'x'],
+      ['', 'x', '', '', '', '', '', '', '', 'x'],
+      ['', '', '', '', '', '', '', '', '', 'x'],
+      ['', '', '', '', '', '', '', '', '', ''],
+      ['', '', 'x', '', '', '', '', 'o', '', ''],
+      ['', '', 'x', '', '', '', '', '', '', ''],
+    ]);
+
+    newBoard.ships.forEach((ship) => {
+      expect(ship.isSunk).toBe(true);
+    });
+  });
+
+  test('disallow shot on already missed coordinate', () => {
+    expect(newBoard.receiveAttack([8, 7])).toBe('already targeted coordinate');
+  });
+
+  test('disallow shot on already hit coordinate', () => {
+    expect(newBoard.receiveAttack([1, 1])).toBe('already targeted coordinate');
+  });
+});
+
+describe('Gameboard - checkAllSunk', () => {
+  const newBoard = new Gameboard(10);
+  newBoard.placeShip('v', [1, 1], 'carrier');
+  newBoard.placeShip('h', [0, 2], 'battleship');
+
+  test('correct board setup', () => {
+    expect(newBoard.board).toEqual([
+      ['', '', 'B', 'B', 'B', 'B', '', '', '', ''],
+      ['', 'C', '', '', '', '', '', '', '', ''],
+      ['', 'C', '', '', '', '', '', '', '', ''],
+      ['', 'C', '', '', '', '', '', '', '', ''],
+      ['', 'C', '', '', '', '', '', '', '', ''],
+      ['', 'C', '', '', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', '', '', '', ''],
+      ['', '', '', '', '', '', '', '', '', ''],
+    ]);
+    expect(newBoard.ships).toHaveLength(2);
+  });
+
+  test('correctly report the sinking of all ships', () => {
+    newBoard.receiveAttack([0, 2]);
+    newBoard.receiveAttack([0, 3]);
+    newBoard.receiveAttack([0, 4]);
+    newBoard.receiveAttack([0, 5]);
+
+    newBoard.receiveAttack([1, 1]);
+    newBoard.receiveAttack([2, 1]);
+    newBoard.receiveAttack([3, 1]);
+    newBoard.receiveAttack([4, 1]);
+    newBoard.receiveAttack([5, 1]);
+
+    expect(newBoard.checkAllSunk()).toBe(true);
+  });
+});
