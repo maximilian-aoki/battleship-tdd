@@ -76,7 +76,7 @@ describe('randomAttack', () => {
       const randomCoords = player.allCoords[0]; // should be [0,0]
       player.allCoords.splice(0, 1);
 
-      if (player.attack(enemy, randomCoords) === 'hit') {
+      if (player.attack(enemy, randomCoords)[0] === 'hit') {
         mockRandomAttack2();
       }
     });

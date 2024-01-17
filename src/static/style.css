@@ -6,6 +6,7 @@ html {
   --jet-2: #3d3b3cff;
   --gray: #7f7979ff;
   --silver: #c1bdb3ff;
+  --silver-2: rgb(180, 176, 167);
   --cambridge-blue: #86ba90ff;
   background-color: var(--silver);
 }
@@ -42,6 +43,7 @@ body {
 /* MESSAGES */
 .messages {
   place-content: center;
+  text-align: center;
   margin-bottom: 1.1rem;
   font-size: 1.3rem;
   font-weight: 500;
@@ -73,6 +75,37 @@ body {
   outline: 0.5rem solid var(--jet-2);
   border-radius: 0.5rem;
   box-shadow: 4px 4px 15px 5px #000000;
+  background-color: var(--silver-2);
+}
+.board {
+  grid-template-columns: repeat(auto-fit, 50px);
+}
+.board > div {
+  outline: 1px solid var(--jet-2);
+  background-color: rgb(163, 195, 197);
+  cursor: pointer;
+}
+.board > div.valid {
+  background-color: rgb(108, 171, 108);
+}
+.board > div.invalid {
+  background-color: rgb(185, 107, 107);
+}
+.board > div.ship {
+  background-color: var(--jet);
+}
+.board > div.miss {
+  background-image: url('../static/images/circle.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 1rem;
+  background-color: rgb(140, 170, 172);
+}
+.board > div.hit {
+  background-color: rgb(185, 107, 107);
+}
+.board > div.available {
+  background-color: rgb(197, 224, 226);
 }
 
 /* FOOTER */

@@ -105,31 +105,37 @@ export default class Gameboard {
     if (this.board[coordArr[0]][coordArr[1]] === '') {
       // shot is a miss
       this.board[coordArr[0]][coordArr[1]] = 'o';
-      return 'miss';
+      return ['miss'];
     }
     if (
       this.board[coordArr[0]][coordArr[1]] === 'o' ||
       this.board[coordArr[0]][coordArr[1]] === 'x'
     ) {
       // already shot here
-      return 'already targeted coordinate';
+      return ['already targeted coordinate'];
     }
     // shot hit a boat
+    const status = {
+      boat: undefined,
+      isSunk: undefined,
+    };
     this.ships.forEach((ship) => {
       if (ship.symbol === this.board[coordArr[0]][coordArr[1]]) {
         ship.hit();
+        status.boat = ship.symbol;
+        status.isSunk = ship.isSunk;
       }
     });
     this.board[coordArr[0]][coordArr[1]] = 'x';
-    return 'hit';
+    return ['hit', status];
   }
 
   checkAllSunk() {
-    this.ships.forEach((ship) => {
-      if (!ship.isSunk) {
+    for (let i = 0; i < this.ships.length; i += 1) {
+      if (!this.ships[i].isSunk) {
         return false;
       }
-    });
+    }
 
     return true;
   }

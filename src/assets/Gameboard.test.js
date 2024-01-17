@@ -300,11 +300,15 @@ describe('Gameboard - receiveAttack', () => {
   });
 
   test('disallow shot on already missed coordinate', () => {
-    expect(newBoard.receiveAttack([8, 7])).toBe('already targeted coordinate');
+    expect(newBoard.receiveAttack([8, 7])[0]).toBe(
+      'already targeted coordinate',
+    );
   });
 
   test('disallow shot on already hit coordinate', () => {
-    expect(newBoard.receiveAttack([1, 1])).toBe('already targeted coordinate');
+    expect(newBoard.receiveAttack([1, 1])[0]).toBe(
+      'already targeted coordinate',
+    );
   });
 });
 
@@ -327,6 +331,10 @@ describe('Gameboard - checkAllSunk', () => {
       ['', '', '', '', '', '', '', '', '', ''],
     ]);
     expect(newBoard.ships).toHaveLength(2);
+  });
+
+  test('correctly report that all ships are NOT sunk', () => {
+    expect(newBoard.checkAllSunk()).toBe(false);
   });
 
   test('correctly report the sinking of all ships', () => {

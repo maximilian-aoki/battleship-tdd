@@ -30,7 +30,7 @@ export default class Player {
     const randomCoords = this.allCoords[randomIndex];
     this.allCoords.splice(randomIndex, 1);
 
-    if (this.attack(enemyPlayer, randomCoords) === 'hit') {
+    if (this.attack(enemyPlayer, randomCoords)[0] === 'hit') {
       this.randomAttack(enemyPlayer);
     }
   }
