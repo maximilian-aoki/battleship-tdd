@@ -22,7 +22,7 @@ export default function placementMessage(boat) {
 
 export function readyFireMessage() {
   messages.innerHTML = `
-    <h2>🔫 Fire when ready... 🔫</h2>
+    <h2>🔫 Fire when ready 🔫</h2>
     `;
 }
 
@@ -63,7 +63,7 @@ export function playerMissMessage() {
 export function computerShotMessage() {
   messages.innerHTML = `
     <h2>Your opponent has fired their shots!</h2>
-    <p>🔫 Fire when ready... 🔫</p>
+    <p>🔫 Fire when ready 🔫</p>
     `;
 }
 
