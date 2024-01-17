@@ -22,7 +22,7 @@ export default function placementMessage(boat) {
 
 export function readyFireMessage() {
   messages.innerHTML = `
-    <h2>Fire when ready!</h2>
+    <h2>🔫 Fire when ready... 🔫</h2>
     `;
 }
 
@@ -30,7 +30,7 @@ export function playerHitMessage(status) {
   const boat = getBoat(status.boat);
   const sunkStatus = status.isSunk ? 'sunk' : 'hit';
   messages.innerHTML = `
-    <h2>You ${sunkStatus} the enemy's ${boat}!</h2>
+    <h2>💥 You ${sunkStatus} the enemy's ${boat}! 💥</h2>
     <p>Fire again when ready...</p>
     `;
 }
@@ -63,20 +63,20 @@ export function playerMissMessage() {
 export function computerShotMessage() {
   messages.innerHTML = `
     <h2>Your opponent has fired their shots!</h2>
-    <p>Fire when ready...</p>
+    <p>🔫 Fire when ready... 🔫</p>
     `;
 }
 
 export function playerWinMessage() {
   messages.innerHTML = `
-    <h2>Congrats, you sunk all the enemy ships and won the battle!</h2>
+    <h2>👑 Congrats, you sunk all the enemy ships and won the battle! 👑</h2>
     <p>Refresh the browser to play again.</p>
     `;
 }
 
 export function computerWinMessage() {
   messages.innerHTML = `
-    <h2>Your opponent sunk all your ships, you lost the battle!</h2>
+    <h2>💀 Your opponent sunk all your ships, you lost the battle! 💀</h2>
     <p>Refresh the browser to play again.</p>
     `;
 }
