@@ -1,0 +1,251 @@
+@import url(https://fonts.googleapis.com/css2?family=Tektur:wght@400..900&display=swap);
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+  /* COLOUR PALETTE */
+  --jet: #323031ff;
+  --jet-2: #3d3b3cff;
+  --gray: #7f7979ff;
+  --silver: #c1bdb3ff;
+  --silver-2: rgb(180, 176, 167);
+  --cambridge-blue: #86ba90ff;
+  background-color: var(--silver);
+}
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+/* font */
+body {
+  min-height: 100vh;
+  grid-template-rows: 10rem 4rem 35rem 1fr 10rem;
+  font-family: 'Tektur', sans-serif;
+}
+/* for debugging */
+* {
+  /* outline: 1px solid grey; */
+}
+/* LAYOUT */
+.grid {
+  display: grid;
+}
+
+/* HEADER */
+.header {
+  place-content: center;
+  margin-top: 4rem;
+  font-size: 5rem;
+  font-weight: 600;
+  color: var(--jet);
+}
+
+/* MESSAGES */
+.messages {
+  place-content: center;
+  text-align: center;
+  margin-bottom: 1.1rem;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--jet);
+}
+
+/* CONTENT */
+.content {
+  justify-self: center;
+  width: 1050px;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+}
+.content > div {
+  grid-template-rows: 1fr 60px;
+}
+.nametag {
+  place-content: center;
+  margin-top: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--jet);
+}
+.computer-name {
+  color: var(--jet-2);
+}
+.frame {
+  outline: 0.5rem solid var(--jet-2);
+  border-radius: 0.5rem;
+  box-shadow: 4px 4px 15px 5px #000000;
+  background-color: var(--silver-2);
+}
+.board {
+  grid-template-columns: repeat(auto-fit, 50px);
+}
+.board > div {
+  outline: 1px solid var(--jet-2);
+  background-color: rgb(163, 195, 197);
+  cursor: pointer;
+}
+.board > div.valid {
+  background-color: rgb(108, 171, 108);
+}
+.board > div.invalid {
+  background-color: rgb(185, 107, 107);
+}
+.board > div.ship {
+  background-color: var(--jet);
+}
+.board > div.miss {
+  background-image: url(ad09a5227ea0c02fca58.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 1rem;
+  background-color: rgb(140, 170, 172);
+}
+.board > div.hit {
+  background-color: rgb(185, 107, 107);
+}
+.board > div.available {
+  background-color: rgb(197, 224, 226);
+}
+
+/* FOOTER */
+.footer {
+  place-content: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--silver);
+  background-color: var(--jet-2);
+}
+
+
+/*# sourceMappingURL=app.css.map*/
